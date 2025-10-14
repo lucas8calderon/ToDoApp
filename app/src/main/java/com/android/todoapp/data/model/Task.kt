@@ -1,6 +1,6 @@
-package com.android.todoapp
+package com.android.todoapp.data.model
 
-data class Todo(
+data class Task(
     val id: Int,
     val title: String,
     var isDone: Boolean = false
