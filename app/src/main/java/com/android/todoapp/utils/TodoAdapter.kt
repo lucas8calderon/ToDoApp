@@ -1,9 +1,10 @@
-package com.android.todoapp.data.model
+package com.android.todoapp.utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.todoapp.databinding.ItemTodoBinding
+import com.android.todoapp.domain.model.Task
 
 class TodoAdapter(
     private var tasks: MutableList<Task>,

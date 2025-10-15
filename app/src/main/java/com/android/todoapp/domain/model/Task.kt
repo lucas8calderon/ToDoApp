@@ -1,4 +1,4 @@
-package com.android.todoapp.data.model
+package com.android.todoapp.domain.model
 
 data class Task(
     val id: Int,
