@@ -1,9 +1,8 @@
-package com.android.todoapp.ui.main.adapter
+package com.android.todoapp.data.model
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.todoapp.data.model.Task
 import com.android.todoapp.databinding.ItemTodoBinding
 
 class TodoAdapter(

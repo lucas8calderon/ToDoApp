@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/todoListFragment">
+
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.android.todoapp.ui.list.TodoListFragment"
+        android:label="Lista de Tarefas"
+        tools:layout="@layout/fragment_todo_list">
+
+        <action
+            android:id="@+id/action_list_to_form"
+            app:destination="@id/todoFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/todoFormFragment"
+        android:name="com.android.todoapp.ui.form.TodoFormFragment"
+        android:label="Adicionar Tarefa"
+        tools:layout="@layout/fragment_todo_form">
+
+        <argument
+            android:name="taskId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+</navigation>

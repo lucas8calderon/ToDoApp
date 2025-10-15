@@ -2,8 +2,19 @@ package com.android.todoapp.data.model.repository
 
 import com.android.todoapp.data.model.Task
 
-class TaskRepository {
+class TaskRepository private constructor() {
     private val tasks = mutableListOf<Task>()
+    
+    companion object {
+        @Volatile
+        private var INSTANCE: TaskRepository? = null
+        
+        fun getInstance(): TaskRepository {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: TaskRepository().also { INSTANCE = it }
+            }
+        }
+    }
 
     fun getTasks(): List<Task> = tasks
 
