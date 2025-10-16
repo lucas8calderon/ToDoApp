@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android.todoapp.databinding.FragmentTodoFormBinding
@@ -21,8 +20,6 @@ class TodoFormFragment : Fragment() {
 
     private var _binding: FragmentTodoFormBinding? = null
     private val binding get() = _binding!!
-    
-    // Usar viewModels() delegate
     private val viewModel: TodoViewModel by viewModels()
 
     override fun onCreateView(
@@ -47,16 +44,13 @@ class TodoFormFragment : Fragment() {
     }
     
     private fun observeViewModel() {
-        // Observar o estado da UI usando StateFlow
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { uiState ->
-                // Mostrar mensagens de erro
                 uiState.errorMessage?.let { errorMessage ->
                     Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
                     viewModel.onEvent(TodoUiEvent.ClearError)
                 }
-                
-                // Navegar de volta quando uma task é adicionada com sucesso
+
                 if (uiState.tasks.isNotEmpty() && binding.etTaskTitle.text.toString().isNotBlank()) {
                     binding.etTaskTitle.text?.clear()
                     findNavController().popBackStack()

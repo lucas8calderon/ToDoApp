@@ -11,12 +11,6 @@ import javax.inject.Inject
 class AddTaskUseCase @Inject constructor(
     private val repository: TaskRepository
 ) {
-    
-    /**
-     * Executa o caso de uso para adicionar uma tarefa.
-     * @param title - Título da tarefa
-     * @throws IllegalArgumentException se o título estiver vazio
-     */
     suspend operator fun invoke(title: String) {
         if (title.isBlank()) {
             throw IllegalArgumentException("Título da tarefa não pode estar vazio")

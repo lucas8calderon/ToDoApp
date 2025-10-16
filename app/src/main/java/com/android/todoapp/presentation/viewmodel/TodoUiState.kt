@@ -11,23 +11,8 @@ data class TodoUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 ) {
-    /**
-     * Verifica se há tarefas na lista.
-     */
     val hasTasks: Boolean get() = tasks.isNotEmpty()
-    
-    /**
-     * Verifica se há mensagem de erro.
-     */
     val hasError: Boolean get() = errorMessage != null
-    
-    /**
-     * Conta o número de tarefas concluídas.
-     */
     val completedTasksCount: Int get() = tasks.count { it.isDone }
-    
-    /**
-     * Conta o número de tarefas pendentes.
-     */
     val pendingTasksCount: Int get() = tasks.count { !it.isDone }
 }

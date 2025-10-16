@@ -8,10 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-/**
- * Implementação concreta do TaskRepository.
- * Responsável por gerenciar dados de tarefas usando Room Database.
- */
 class TaskRepository @Inject constructor(
     private val database: AppDatabase
 ) : TaskRepositoryInterface {

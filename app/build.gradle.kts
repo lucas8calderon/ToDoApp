@@ -88,8 +88,6 @@ dependencies {
     // Android Testing
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("androidx.test:rules:1.5.0")
     androidTestImplementation("androidx.room:room-testing:2.6.1")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
