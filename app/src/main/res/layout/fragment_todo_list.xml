@@ -41,7 +41,7 @@
         android:layout_margin="16dp"
         android:contentDescription="Adicionar tarefa"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="#7b2cbf"
         app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

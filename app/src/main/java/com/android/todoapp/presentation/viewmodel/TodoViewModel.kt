@@ -1,95 +1,139 @@
 package com.android.todoapp.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.todoapp.data.repository.TaskRepository
-import com.android.todoapp.domain.model.Task
+import com.android.todoapp.domain.usecase.AddTaskUseCase
+import com.android.todoapp.domain.usecase.DeleteTaskUseCase
+import com.android.todoapp.domain.usecase.GetTasksUseCase
+import com.android.todoapp.domain.usecase.ToggleTaskUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TodoViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = TaskRepository.Companion.getInstance(application)
-
-    private val _tasks = MutableStateFlow<List<Task>>(emptyList())
-    val tasks: StateFlow<List<Task>> = _tasks.asStateFlow()
-
-    private val _tasksLiveData = MutableLiveData<List<Task>>()
-    val tasksLiveData: LiveData<List<Task>> = _tasksLiveData
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
-
+/**
+ * ViewModel responsável por gerenciar o estado da UI de tarefas.
+ * Segue o padrão MVVM e Clean Architecture.
+ * 
+ * Princípios SOLID aplicados:
+ * - SRP: Responsável apenas por gerenciar estado da UI
+ * - DIP: Depende de abstrações (Use Cases) não de implementações
+ * - OCP: Aberto para extensão, fechado para modificação
+ */
+@HiltViewModel
+class TodoViewModel @Inject constructor(
+    private val getTasksUseCase: GetTasksUseCase,
+    private val addTaskUseCase: AddTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val toggleTaskUseCase: ToggleTaskUseCase
+) : ViewModel() {
+    
+    private val _uiState = MutableStateFlow(TodoUiState())
+    val uiState: StateFlow<TodoUiState> = _uiState.asStateFlow()
+    
     init {
         loadTasks()
     }
-
+    
+    /**
+     * Processa eventos da UI.
+     * Segue o princípio de responsabilidade única (SRP).
+     */
+    fun onEvent(event: TodoUiEvent) {
+        when (event) {
+            is TodoUiEvent.AddTask -> addTask(event.title)
+            is TodoUiEvent.ToggleTask -> toggleTask(event.task)
+            is TodoUiEvent.DeleteTask -> deleteTask(event.task)
+            is TodoUiEvent.ClearError -> clearError()
+            is TodoUiEvent.LoadTasks -> loadTasks()
+        }
+    }
+    
+    /**
+     * Carrega todas as tarefas usando o Use Case.
+     * Segue o princípio de responsabilidade única (SRP).
+     */
     private fun loadTasks() {
         viewModelScope.launch {
-            try {
-                _isLoading.value = true
-                repository.getTasks().collect { taskList ->
-                    _tasks.value = taskList
-                    _tasksLiveData.value = taskList
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            
+            getTasksUseCase()
+                .catch { exception ->
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        errorMessage = "Erro ao carregar tarefas: ${exception.message}"
+                    )
                 }
-            } catch (e: Exception) {
-                _errorMessage.value = "Erro ao carregar tarefas: ${e.message}"
-            } finally {
-                _isLoading.value = false
-            }
+                .collect { tasks ->
+                    _uiState.value = _uiState.value.copy(
+                        tasks = tasks,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
         }
     }
-
-    fun addTask(title: String) {
-        if (title.isBlank()) {
-            _errorMessage.value = "Digite um título para a tarefa!"
-            return
-        }
-
-        val task = Task(
-            id = 0,
-            title = title.trim(),
-            isDone = false
-        )
-
+    
+    /**
+     * Adiciona uma nova tarefa usando o Use Case.
+     * @param title Título da tarefa
+     */
+    private fun addTask(title: String) {
         viewModelScope.launch {
             try {
-                repository.addTask(task)
+                addTaskUseCase(title)
+                // A lista será atualizada automaticamente via Flow
+            } catch (e: IllegalArgumentException) {
+                _uiState.value = _uiState.value.copy(errorMessage = e.message)
             } catch (e: Exception) {
-                _errorMessage.value = "Erro ao adicionar tarefa: ${e.message}"
+                _uiState.value = _uiState.value.copy(
+                    errorMessage = "Erro ao adicionar tarefa: ${e.message}"
+                )
             }
         }
     }
-
-    fun toggleTask(task: Task) {
+    
+    /**
+     * Alterna o status de conclusão de uma tarefa usando o Use Case.
+     * @param task Tarefa a ser atualizada
+     */
+    private fun toggleTask(task: com.android.todoapp.domain.model.Task) {
         viewModelScope.launch {
             try {
-                repository.toggleTask(task)
+                toggleTaskUseCase(task)
+                // A lista será atualizada automaticamente via Flow
             } catch (e: Exception) {
-                _errorMessage.value = "Erro ao atualizar tarefa: ${e.message}"
+                _uiState.value = _uiState.value.copy(
+                    errorMessage = "Erro ao atualizar tarefa: ${e.message}"
+                )
             }
         }
     }
-
-    fun deleteTask(task: Task) {
+    
+    /**
+     * Deleta uma tarefa usando o Use Case.
+     * @param task Tarefa a ser deletada
+     */
+    private fun deleteTask(task: com.android.todoapp.domain.model.Task) {
         viewModelScope.launch {
             try {
-                repository.removeTask(task)
+                deleteTaskUseCase(task)
+                // A lista será atualizada automaticamente via Flow
             } catch (e: Exception) {
-                _errorMessage.value = "Erro ao deletar tarefa: ${e.message}"
+                _uiState.value = _uiState.value.copy(
+                    errorMessage = "Erro ao deletar tarefa: ${e.message}"
+                )
             }
         }
     }
-
-    fun clearErrorMessage() {
-        _errorMessage.value = null
+    
+    /**
+     * Limpa mensagens de erro da UI.
+     */
+    private fun clearError() {
+        _uiState.value = _uiState.value.copy(errorMessage = null)
     }
 }

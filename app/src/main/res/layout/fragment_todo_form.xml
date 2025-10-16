@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Salvar"
+            android:backgroundTint="#7b2cbf"
             app:cornerRadius="8dp"
             android:textColor="@android:color/white" />
 

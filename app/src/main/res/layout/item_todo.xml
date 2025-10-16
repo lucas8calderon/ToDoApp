@@ -38,4 +38,5 @@
             android:src="@drawable/ic_delete" />
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

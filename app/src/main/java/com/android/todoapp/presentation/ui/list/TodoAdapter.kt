@@ -1,4 +1,4 @@
-package com.android.todoapp.presentation.list
+package com.android.todoapp.presentation.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,6 +18,7 @@ class TodoAdapter(
         fun bind(task: Task) {
             binding.textTitle.text = task.title
             binding.checkDone.isChecked = task.isDone
+
             binding.checkDone.setOnCheckedChangeListener { _, _ ->
                 onToggle(task)
             }
@@ -28,12 +29,10 @@ class TodoAdapter(
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val binding = ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TodoViewHolder(binding)
     }
-
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.bind(tasks[position])
@@ -43,11 +42,6 @@ class TodoAdapter(
 
     fun updateData(newTasks: List<Task>) {
         tasks = newTasks.toMutableList()
-
-        if (tasks.size <= 20) {
-            notifyDataSetChanged()
-        } else {
-            notifyDataSetChanged()
-        }
+        notifyDataSetChanged()
     }
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todoListFragment"
-        android:name="com.android.todoapp.presentation.list.TodoListFragment"
+        android:name="com.android.todoapp.presentation.ui.list.TodoListFragment"
         android:label="Lista de Tarefas"
         tools:layout="@layout/fragment_todo_list">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/todoFormFragment"
-        android:name="com.android.todoapp.presentation.form.TodoFormFragment"
+        android:name="com.android.todoapp.presentation.ui.form.TodoFormFragment"
         android:label="Adicionar Tarefa"
         tools:layout="@layout/fragment_todo_form">
 
