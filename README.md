@@ -152,7 +152,7 @@ O projeto inclui testes abrangentes:
 
 | Lista de Tarefas | Adicionar Tarefa |
 |------------------|------------------|
-| ![Lista](screenshots/list.png) | ![Formulário](screenshots/form.png) |
+| ![Lista](https://github.com/user-attachments/assets/9c918612-8c8a-48d6-9c80-32a2fd7fee6c.png) | ![Formulário](https://github.com/user-attachments/assets/e62d97bd-e2a1-416d-96b5-565ec31e777e.png) |
 
 ## 🎯 Principais Conceitos Demonstrados
 
