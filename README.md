@@ -22,34 +22,39 @@ O ToDoApp é uma aplicação Android completa que demonstra o uso de arquitetura
 - 💉 **Injeção de Dependência**: Gerenciamento automático com Hilt
 
 
+---
+
 ## 🖥 Preview
 
 <div align="center">
 
- <img src="https://github.com/user-attachments/assets/9c918612-8c8a-48d6-9c80-32a2fd7fee6c.png" width="150">
- <img src="https://github.com/user-attachments/assets/e62d97bd-e2a1-416d-96b5-565ec31e777e.png" width="150">
-
+ <img src="https://github.com/user-attachments/assets/f6015d72-d8f2-4980-a42c-9d8c836fc1ca" width="350">
+ <img src="https://github.com/user-attachments/assets/2d3d30d5-3fba-4066-92c3-764214895b2a" width="350">
 </div>
+
+---
+
+
 
 ## 🏗️ Arquitetura
 
 O projeto segue **Clean Architecture** com as seguintes camadas:
 
 ```
-📱 ToDoApp - Clean Architecture + MVVM + Hilt
-├── 🎯 Domain Layer (Regras de Negócio)
+ ToDoApp - Clean Architecture + MVVM + Hilt
+├──  Domain Layer (Regras de Negócio)
 │   ├── Model: Task
 │   ├── Repository: TaskRepository (interface)
 │   └── Use Cases: GetTasks, AddTask, DeleteTask, ToggleTask
-├── 💾 Data Layer (Fonte de Dados)
+├──  Data Layer (Fonte de Dados)
 │   ├── Room Database
 │   ├── Mappers
 │   └── Repository Implementation
-├── 🎨 Presentation Layer (UI)
+├──  Presentation Layer (UI)
 │   ├── ViewModel (MVVM)
 │   ├── UI State Management
 │   └── Fragments + Adapter
-└── 🔧 Dependency Injection (Hilt)
+└──  Dependency Injection (Hilt)
     ├── Database Module
     └── Repository Module
 ```
@@ -157,12 +162,6 @@ O projeto inclui testes abrangentes:
 - Testes de UI com Espresso
 - Testes de Room Database
 - Testes de integração
-
-## 📱 Screenshots
-
-| Lista de Tarefas | Adicionar Tarefa |
-|------------------|------------------|
-| ![Lista](https://github.com/user-attachments/assets/9c918612-8c8a-48d6-9c80-32a2fd7fee6c.png) | ![Formulário](https://github.com/user-attachments/assets/e62d97bd-e2a1-416d-96b5-565ec31e777e.png) |
 
 ## 🎯 Principais Conceitos Demonstrados
 
