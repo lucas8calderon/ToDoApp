@@ -1,4 +1,4 @@
-package com.android.todoapp.ui.list
+package com.android.todoapp.presentation.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.todoapp.utils.TodoAdapter
+import com.android.todoapp.presentation.list.TodoAdapter
 import com.android.todoapp.data.repository.TaskRepository
 import com.android.todoapp.databinding.FragmentTodoListBinding
 import kotlinx.coroutines.launch
@@ -37,11 +37,6 @@ class TodoListFragment : Fragment() {
         setupFab()
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshList()
-    }
-
     private fun setupRecyclerView() {
         adapter = TodoAdapter(
             mutableListOf(),
@@ -60,7 +55,6 @@ class TodoListFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
 
-        // Observar mudanças no banco
         viewLifecycleOwner.lifecycleScope.launch {
             repository.getTasks().collectLatest { tasks ->
                 adapter.updateData(tasks)
@@ -68,17 +62,10 @@ class TodoListFragment : Fragment() {
         }
     }
 
-
-
     private fun setupFab() {
         binding.fabAddTask.setOnClickListener {
             findNavController().navigate(com.android.todoapp.R.id.action_list_to_form)
         }
-    }
-
-    private fun refreshList() {
-        // A lista será atualizada automaticamente via Flow no setupRecyclerView
-        // Este método não é mais necessário com Room + Flow
     }
 
     override fun onDestroyView() {

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.form.TodoFormFragment">
+    tools:context=".presentation.form.TodoFormFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

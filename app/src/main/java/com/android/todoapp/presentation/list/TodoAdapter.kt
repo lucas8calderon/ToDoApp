@@ -1,4 +1,4 @@
-package com.android.todoapp.utils
+package com.android.todoapp.presentation.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,9 @@ import com.android.todoapp.domain.model.Task
 
 class TodoAdapter(
     private var tasks: MutableList<Task>,
-    private val onDelete: (Task) -> Unit,
-    private val onToggle: (Task) -> Unit
+    private val onToggle: (Task) -> Unit,
+    private val onDelete: (Task) -> Unit
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
-
 
     inner class TodoViewHolder(val binding: ItemTodoBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -19,7 +18,6 @@ class TodoAdapter(
         fun bind(task: Task) {
             binding.textTitle.text = task.title
             binding.checkDone.isChecked = task.isDone
-
             binding.checkDone.setOnCheckedChangeListener { _, _ ->
                 onToggle(task)
             }

@@ -5,16 +5,14 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.list.TodoListFragment">
+    tools:context=".presentation.list.TodoListFragment">
 
-    <!-- Conteúdo principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Título -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -25,7 +23,6 @@
             android:layout_marginBottom="12dp"
             android:textColor="@android:color/black" />
 
-        <!-- Lista de tarefas -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -36,7 +33,6 @@
 
     </LinearLayout>
 
-    <!-- Botão flutuante -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddTask"
         android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.android.todoapp.ui.main
+package com.android.todoapp.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
